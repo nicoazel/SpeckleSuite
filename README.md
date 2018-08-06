@@ -49,13 +49,19 @@ its also crazy easy to do:
 
 ___
 
+
+
+
 # 2. Speckle Apps
 
 ok, now on to the simplicity of getting the speckle suite running....
 
 Getting the speckle server is straight forward but I still don't actually know where the other apps are supposed to be installed. Im sure its documented out there somewhere...
 
-## 2.1 Speckle Server
+
+
+
+### 2.1 Speckle Server
 
 
 1) Install mongodb, redis servers and npm:
@@ -87,7 +93,10 @@ Getting the speckle server is straight forward but I still don't actually know w
 
        $ node server.js
 
-## 2.2. Speckle Admin
+
+
+
+### 2.2. Speckle Admin
 
 
 
@@ -103,7 +112,7 @@ npm run build
 ```
 
 
-## 2.3 Speckle Viewer
+### 2.3 Speckle Viewer
 It is worth noting that registered users have access to a speckle viewer from their user page...
 Having a personal Speckle Viewer hosted on a server may be of value for publicly accessible models?
 
