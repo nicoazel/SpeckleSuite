@@ -1,17 +1,19 @@
 # SpeckleSuite
 
-This is an attempt to build a walkthrough for setting up a ubuntu 16.x droplet and installing:
+This is an attempt to build a consolidated walkthrough for setting up a ubuntu 16.04 droplet and installing:
   * speckleAdmin
   * speckleServer
   * speckleViewer
 
 with a [NGINX](https://www.nginx.com/) reverse proxy server, and synchronized URL's
 
+#### Background
 
-## Background
+The steps for this are taken from [Digital Ocean](www.digitalocean.com) tutorials and [Speckle](https://speckle.works) documents. I have modified them or outlined them to focus on running a server exclusively for Speckle. This is intended for myself and other novice developers/users.
 
-The steps for this are taken from [Digital Ocean](www.digitalocean.com) tutorials and modified to focus on running a server exclusively for Speckle.
+While I have been using digitalocean for their costs and excellent noob friendly tutorials, these steps should work on any Virtual Privat Server (VPS)
 
+___
 
 ## 1. Droplet
 
@@ -21,32 +23,37 @@ Set it up with *SSH* from [PuttyGen](https://www.chiark.greenend.org.uk/~sgtatha
 
 ### 1.1 Initial Server Setup
 Set up a `Speck` ***super user*** with Admin privileges and get a `ufw` ***fire wall*** setup
-[Digital Ocean initial server Setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 
-### 1.2 install NGINX
-install [nginx](https://www.nginx.com/) and then get three ***server blocks*** up and running
+* [My Quick Summary](/initialsetup.md)
+* [Digital Ocean Initial Server Setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 
-[nginx install](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04)
+### 1.2 Install Nginx
 
-[nginx server blocks](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
+Install and get running [NGINX](https://www.nginx.com/) as a ***reverse proxy server***, for three ***server blocks***
 
-### 1.3 set up your DNS
-not going to discuss here other than some basincs:
-... ***domain*** is set to your IP address @ port 80 as an `A record`
-... ***sub-domain*** can is a cname record set to @.
+* [Digital Ocean Nginx Install](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04)
+* [Digital Ocean Nginx Server Blocks](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
 
-##### I need to look into this for a sec and see about the ports per different speck apps....
+### 1.3 Set Up DNS
+not going to discuss here other than some basics:
+* ***domain*** is an `A` record set to your IP address on port 80
+* ***sub-domain*** can is a `cname` record set to @.
 
-### 1.4 set up https with Certbot
+###### I need to look into this for a sec and see about the ports per different speck apps....
 
+### 1.4 Set Up HTTPS with Certbot
+Set up SSL for encrypted connections, its free and its comforting to see the lock up in the corner.
+its also crazy easy to do:
 [Digital Ocean Certbot Tutorial](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
 
+___
 
-
-# 2. Speckle install
+# 2. Speckle Apps
 
 ok, now on to the simplicity of getting the speckle suite running....
+
+Getting the speckle server is straight forward but I still don't actually know where the other apps are supposed to be installed. Im sure its documented out there somewhere...
 
 ## 2.1 Speckle Server
 
@@ -95,26 +102,38 @@ npm run dev
 npm run build
 ```
 
-""
 
 ## 2.3 Speckle Viewer
 It is worth noting that registered users have access to a speckle viewer from their user page...
 Having a personal Speckle Viewer hosted on a server may be of value for publicly accessible models?
 
-
-# The End
-
-
-
-
-example of md block code....
-``` bash
+```bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:9090
+# serve with hot reload at localhost:8888 (8080 is taken by the local speckle server instance 💯)
 npm run dev
 
 # build for production with minification
 npm run build
 ```
+
+You will need to modify the `./dist/config.js` file to fit your deployment details. It’s rather self-descriptive, it just exports a global object with info:
+```js
+var SpkAppConfig = {
+  serverUrl: 'http://localhost:8080',
+  allowGuestAccess: true,
+  logoUrl: 'https://company.png'
+}
+
+window.SpkAppConfig = SpkAppConfig
+```
+
+# Credits
+
+I'm an aspiring developer but this is really pointing to other peoples work.
+a big thanks goes to Dimitrie A. Stefanescu and the Speckle Project Contributors.
+
+Also a thanks to digital ocean for providing excellent tutorials and documentation to help get novice backend developers familiar with the basics.
+
+# The End
