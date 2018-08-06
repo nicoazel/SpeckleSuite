@@ -10,84 +10,77 @@ with a [NGINX](https://www.nginx.com/) reverse proxy server, and synchronized UR
 
 ## Background
 
-The steps for this are taken from [Digital Ocean](www.digitalocean.com) tutorials and modified to be lead directly to running a server exclusively for Speckle.
+The steps for this are taken from [Digital Ocean](www.digitalocean.com) tutorials and modified to focus on running a server exclusively for Speckle.
 
 
-## Droplet
+## 1. Droplet
 
 Im using a `Ubuntu 16.04.5 x64 1Gb 1vCPU 25 GB Standard Droplet`
 
 Set it up with *SSH* from [PuttyGen](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) and access it through [Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html).
 
-### Initial Server Setup
+### 1.1 Initial Server Setup
 Set up a `Speck` ***super user*** with Admin privileges and get a `ufw` ***fire wall*** setup
 [Digital Ocean initial server Setup](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)
 
-### install NGINX
-install nginc and then get three ***server blocks*** up and running
-[nginx instal](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04)
+### 1.2 install NGINX
+install [nginx](https://www.nginx.com/) and then get three ***server blocks*** up and running
+
+[nginx install](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04)
 
 [nginx server blocks](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-16-04)
 
-### set up your DNS
+### 1.3 set up your DNS
 not going to discuss here other than some basincs:
 ... ***domain*** is set to your IP address @ port 80 as an `A record`
 ... ***sub-domain*** can is a cname record set to @.
 
-#####I need to look into this for a sec and see about the ports per different speck apps....
+##### I need to look into this for a sec and see about the ports per different speck apps....
 
-### set up https with Certbot
+### 1.4 set up https with Certbot
 
 [Digital Ocean Certbot Tutorial](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 
 
-#Speckle install
+
+
+# 2. Speckle install
 
 ok, now on to the simplicity of getting the speckle suite running....
 
-## Speckle Server
+## 2.1 Speckle Server
 
 
 1) Install mongodb, redis servers and npm:
 
        $ sudo apt-get install mongodb redis npm
 
-2) If you don't want both the redis and mongo servers running all the time (For ex. if you are just testing), disable both startup scripts (If you wish to leave both running automatically, skip to step 4):
-
-       $ sudo systemctl disable mongodb
-       $ sudo systemctl disable redis-server`
-
-3) And stop both mongo and redis processes that were started automatically by apt-get:
-
-       $ sudo systemctl stop mongodb
-       $ sudo systemctl stop redis-server
-
-4) Clone SpeckleServer and run npm to install the needed nodejs packages:
+2) Clone SpeckleServer and run npm to install the needed nodejs packages:
 
        $ git clone https://github.com/speckleworks/SpeckleServer.git
        $ cd SpeckleServer
        $ npm install
 
-5) Follow the instructions in `.env-base` file to configure your server.
+3) Follow the instructions in `.env-base` file to configure your server.
 
-6) Start mongo (create a folder somewhere to store the db):
+4) Start mongo (create a folder somewhere to store the db):
 
        $ mongodb --dbpath /path/to/some/folder
 
-7) Start redis in another terminal:
+5) Start redis in another terminal:
 
        $ redis-server
 
-8) Check that both mongo and redis are running OK and that you can connect to them with these two clients:
+6) Check that both mongo and redis are running OK and that you can connect to them with these two clients:
 
        $ mongo
        $ redis-cli
 
-9) Start Speckle in a third terminal:
+7) Start Speckle in a third terminal:
 
        $ node server.js
 
-## Speckle Admin
+## 2.2. Speckle Admin
 
 
 
@@ -104,7 +97,7 @@ npm run build
 
 ""
 
-## Speckle Viewer
+## 2.3 Speckle Viewer
 It is worth noting that registered users have access to a speckle viewer from their user page...
 Having a personal Speckle Viewer hosted on a server may be of value for publicly accessible models?
 
